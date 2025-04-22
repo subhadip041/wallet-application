@@ -18,6 +18,6 @@ npm install
 npm run dev  
 
 ## ⚙️ Tech Stack
-- Node.js + Express (Backend)  
+- Node.js + Express (Backend)
 - React (Frontend)
 
