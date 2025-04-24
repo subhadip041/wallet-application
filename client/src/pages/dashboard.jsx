@@ -4,6 +4,7 @@ export const Dashboard = () => {
     return (
         <div>
             <Appbar />
+            <div></div>
         </div>
     )
 }

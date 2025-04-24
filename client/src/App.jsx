@@ -10,7 +10,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div>
+    <div className="bg-slate-200 sm:h-screen flex justify-center">
 
     <Router>
       <Routes>
