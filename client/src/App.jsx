@@ -6,6 +6,7 @@ import { Dashboard } from './pages/dashboard';
 import { SendMoney } from './pages/send';
 import { Home } from './pages/home';
 
+
 function App() {
   const [count, setCount] = useState(0)
 

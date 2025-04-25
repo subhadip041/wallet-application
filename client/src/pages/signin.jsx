@@ -5,19 +5,39 @@ import { SubHeading } from '../components/Subheading'
 import { InputBox } from '../components/InputBox'
 import { Button } from '../components/Button'
 import { BottomWarning } from "../components/BottomWarning"
+import axios from 'axios';
+import { useNavigate } from "react-router-dom"
+
+
+
 
 export const Signin = () => {
   
   const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-
-    const signupHandle = ()=>{
-        const signUppayload = {
-            username: username,
-            password: password
+    const navigate = useNavigate();
+    const signupHandle = async ()=>{
+        const signUpPayload = {
+            "username": username,
+            "password": password
         }
-        console.log(signUppayload)
+        const apiUrl = import.meta.env.VITE_API_URL
+
+        try {
+            const response = await axios.post(`${apiUrl}/user/signin`, signUpPayload);
+            localStorage.setItem('token', response.data.token )
+            navigate("/dashboard")
+
+          } catch (error) {
+            if (error.response) {
+              console.error("Error:", error.response.status, error.response.data);
+            } else {
+              console.error("Error:", error.message);
+            }
+          }
     }
+
+
     return (
         <div className="bg-slate-200 sm:h-screen flex justify-center">
             <div className="flex flex-col justify-center px-6 py-2.5">
