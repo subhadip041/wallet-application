@@ -16,15 +16,15 @@ export const Signin = () => {
   const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
-    const signupHandle = async ()=>{
-        const signUpPayload = {
+    const signinHandle = async ()=>{
+        const signInPayload = {
             "username": username,
             "password": password
         }
         const apiUrl = import.meta.env.VITE_API_URL
 
         try {
-            const response = await axios.post(`${apiUrl}/user/signin`, signUpPayload);
+            const response = await axios.post(`${apiUrl}/user/signin`, signInPayload);
             localStorage.setItem('token', response.data.token )
             navigate("/dashboard")
 
@@ -46,7 +46,7 @@ export const Signin = () => {
                     <SubHeading label={'Enter your credentials to access your account'} />
                     <InputBox onChange={(e) => {setUsername(e.target.value);}}  value={username} placeholder="jhon@email.com" label={"Email"} name={"username"} type={"email"} />
                     <InputBox onChange={(e) => {setPassword(e.target.value);}} value={password} placeholder="●●●●●●" label={"Password"} name={"password"} type={"password"} />
-                    <Button onClick={signupHandle} label={'Signin'} />
+                    <Button onClick={signinHandle} label={'Signin'} />
                     <BottomWarning label={"Don't have an account?"} buttonText={"Sign Up"} to={"/signup"} />
                 </div>
             </div>

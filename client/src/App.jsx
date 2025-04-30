@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SignUp } from './pages/signup';
 import { Signin } from './pages/signin';
@@ -8,7 +7,6 @@ import { Home } from './pages/home';
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className="bg-slate-200 sm:h-screen flex justify-center">
