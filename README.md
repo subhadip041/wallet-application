@@ -10,7 +10,7 @@ A simple e-wallet application
 # Start the server
 cd server
 npm install
-npm start    # Runs on http://localhost:4500
+npm run    # Runs on http://localhost:3400
 
 # Start the client
 cd ../client

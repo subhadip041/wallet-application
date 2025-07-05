@@ -1,12 +1,15 @@
-const express = require('express')
-const router = express.Router()
-const { authMiddleware } = require('../../middleware/authmiddleware')
-const { userInfo } = require('../../db/db')
+// const createUserModel = require('../models/auth.models')
+// const connectDB = require('../config/db')
+// const db = connectDB()
+// const User = createUserModel(db)
 
-router.get("/",authMiddleware, async (req, res) => {
-    const filter = req.query.filter || "";
+const User = require('../models/auth.models')
 
-    const users = await userInfo.find({
+const bulkUser = async (req,res)=>{
+
+     const filter = req.query.filter || "";
+
+    const users = await User.find({
         $or: [{
             firstname: {
                 '$regex' : filter, 
@@ -28,6 +31,7 @@ router.get("/",authMiddleware, async (req, res) => {
             _id: user._id
         }))
     })
-})
+}
 
-module.exports = router
+module.exports = bulkUser
+
