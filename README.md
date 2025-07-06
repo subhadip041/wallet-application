@@ -10,10 +10,17 @@ A simple e-wallet application
 # Start the server
 cd server
 npm install
-npm run    # Runs on http://localhost:3400
+touch .env
+
+add 
+DB_URI=
+JWT_SECRET=
+in .env
+
+npm run dev   # Runs on http://localhost:3400
 
 # Start the client
-cd ../client
+cd client
 npm install
 npm run dev  
 
