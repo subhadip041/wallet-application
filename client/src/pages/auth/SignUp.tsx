@@ -11,32 +11,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useUserStore } from "@/store/userStore";
+import { Link } from "react-router-dom";
 
-
-export function SignIn() {
-const navigate = useNavigate();
-
- 
-  const [userName, setUsername ] = useState("");
-  const [password, setPassword] = useState("");
-
-  const signIn = useUserStore((state)=>state.signin)
-
-
-
-
-  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await signIn(userName,password);
-    const token = localStorage.getItem("auth_Token");
-    if(token){
-      navigate("/dashboard")
-    }
-  };
-
+export function SignUp() {
   return (
     <Wrapper>
       <div className="flex items-center justify-center min-h-screen w-full px-4">
@@ -47,20 +24,37 @@ const navigate = useNavigate();
               Enter your email below to login to your account
             </CardDescription>
             <CardAction>
-              <Link to="/signup">Sign Up</Link>
+              <Link to="/signin">Sign In</Link>
             </CardAction>
           </CardHeader>
           <CardContent>
-            <form onSubmit={onSubmitHandler}>
+            <form>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
-                    id="username"
+                    id="email"
                     type="email"
                     placeholder="m@example.com"
                     required
-                    onChange={(e)=>setUsername(e.target.value)}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="FirstName">FirstName</Label>
+                  <Input
+                    id="FirstName"
+                    type="text"
+                    placeholder="FirstName"
+                    required
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="LastName">LastName</Label>
+                  <Input
+                    id="FirstName"
+                    type="text"
+                    placeholder="LastName"
+                    required
                   />
                 </div>
                 <div className="grid gap-2">
@@ -73,16 +67,11 @@ const navigate = useNavigate();
                       Forgot your password?
                     </a>
                   </div>
-                  <Input
-                    id="password"
-                    type="password"
-                    required
-                    onChange={(e)=>setPassword(e.target.value)}
-                  />
+                  <Input id="password" type="password" required />
                 </div>
               </div>
               <Button type="submit" className="w-full mt-6">
-                Signin
+                Signup
               </Button>
             </form>
           </CardContent>
