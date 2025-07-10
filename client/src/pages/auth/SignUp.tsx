@@ -11,9 +11,42 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/userStore";
+import { toast } from "sonner";
+import { Toaster } from "sonner"
+
+
+
+
 
 export function SignUp() {
+
+  const [userName, setUsername ] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstname] = useState("");
+  const [lastName, setLastname] = useState("")
+  const signUp = useUserStore((state)=>state.signup)
+  const errorMsg = useUserStore((state)=>state.error)
+
+  const navigate = useNavigate()
+
+  const onclickHandler = async(e: React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+
+    await signUp(userName, password, firstName, lastName)
+    const token = localStorage.getItem("auth_Token")
+    if(token){
+      return navigate('/dashboard')
+    }
+    else{
+      toast(await errorMsg)
+    }
+
+  }
+
+
   return (
     <Wrapper>
       <div className="flex items-center justify-center min-h-screen w-full px-4">
@@ -28,7 +61,7 @@ export function SignUp() {
             </CardAction>
           </CardHeader>
           <CardContent>
-            <form>
+            <form onSubmit={onclickHandler}>
               <div className="flex flex-col gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
@@ -37,6 +70,7 @@ export function SignUp() {
                     type="email"
                     placeholder="m@example.com"
                     required
+                    onChange={(e)=> setUsername(e.target.value)}
                   />
                 </div>
                 <div className="grid gap-2">
@@ -45,16 +79,17 @@ export function SignUp() {
                     id="FirstName"
                     type="text"
                     placeholder="FirstName"
+                    onChange={(e)=> setFirstname(e.target.value)}
                     required
                   />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="LastName">LastName</Label>
                   <Input
-                    id="FirstName"
+                    id="LastName"
                     type="text"
                     placeholder="LastName"
-                    required
+                    required onChange={(e)=> setLastname(e.target.value)}
                   />
                 </div>
                 <div className="grid gap-2">
@@ -67,7 +102,7 @@ export function SignUp() {
                       Forgot your password?
                     </a>
                   </div>
-                  <Input id="password" type="password" required />
+                  <Input id="password" type="password" required onChange={(e)=> setPassword(e.target.value)} />
                 </div>
               </div>
               <Button type="submit" className="w-full mt-6">
@@ -82,6 +117,7 @@ export function SignUp() {
           </CardFooter>
         </Card>
       </div>
+      <Toaster />
     </Wrapper>
   );
 }

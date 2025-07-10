@@ -1,3 +1,5 @@
+"use client"
+
 import { Wrapper } from "@/components/layout/Wrapper";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +16,8 @@ import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserStore } from "@/store/userStore";
+import { Toaster } from "sonner"
+import { toast } from "sonner";
 
 
 export function SignIn() {
@@ -24,6 +28,8 @@ const navigate = useNavigate();
   const [password, setPassword] = useState("");
 
   const signIn = useUserStore((state)=>state.signin)
+  const loading = useUserStore((state)=>state.loading)
+  
 
 
 
@@ -33,8 +39,13 @@ const navigate = useNavigate();
     await signIn(userName,password);
     const token = localStorage.getItem("auth_Token");
     if(token){
-      navigate("/dashboard")
+    return  navigate("/dashboard")
     }
+    else{
+      console.log('error')
+        toast('Signup failed! Please check your username and password.')
+    }
+    
   };
 
   return (
@@ -81,18 +92,19 @@ const navigate = useNavigate();
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full mt-6">
-                Signin
+              <Button type="submit" className="w-full mt-6 cursor-pointer">
+              {loading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
           </CardContent>
           <CardFooter className="flex-col gap-2">
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full cursor-pointer" onClick={()=>(toast('xyz'))}>
               Login with Google
             </Button>
           </CardFooter>
         </Card>
       </div>
+    <Toaster />
     </Wrapper>
   );
 }

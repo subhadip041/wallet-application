@@ -47,40 +47,42 @@ export const useUserStore = create<UserState>((set) => ({
       // };
 
       // set({ user, loading: false });
+      
     } catch (err: any) {
-      set({ error: err.response?.data?.message || 'Signin failed', loading: false });
+      set({ error: 'Signup failed! Please check your username and password.', loading: false });
     }
   },
 
-  signup: async (firstname, lastname, username, password) => {
+  signup: async ( userName, password,firstName, lastName) => {
     set({ loading: true, error: null });
     try {
-      const res = await axios.post<{ token: string }>('/api/signup', {
-        firstname,
-        lastname,
-        username,
-        password,
+      const res = await axios.post<{ token: string }>('http://localhost:3400/api/v1/user/signup', {
+        "username":userName,
+        "password":password,
+        "firstName":firstName,
+        "lastName":lastName
       });
 
       const token = res.data.token;
 
-      const user: User = {
-        firstname,
-        lastname,
-        username,
-        token,
-      };
+      // const user: User = {
+      //   firstname,
+      //   lastname,
+      //   username,
+      //   token,
+      // };
 
-      set({ user, loading: false });
-      localStorage.setItem('auth_token', token);
+      // set({ user, loading: false });
+      set({loading:false})
+      localStorage.setItem('auth_Token', token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } catch (err: any) {
-      set({ error: err.response?.data?.message || 'Signup failed', loading: false });
+      set({ error: err.response?.data?.msg  || 'Signup failed! Please check your username and password.', loading: false });
     }
   },
 
   logout: () => {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_Token');
     delete axios.defaults.headers.common['Authorization'];
     set({ user: null });
   },
